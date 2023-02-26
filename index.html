@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary API</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+    <script src="https://kit.fontawesome.com/07a09e25b7.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <main id="main-body" class="bg-slate-200 min-h-screen">
+        <section class="bg-slate-700 py-14 flex justify-center">
+            <div class="">
+                <input id="input-field" class="px-2 py-1 rounded-l-md bg-slate-100 focus:bg-white outline-none" type="text" placeholder="search word definitions"><input id="search-btn" class="bg-rose-500 hover:bg-rose-600 px-5 py-1 rounded-r-md text-white font-semibold cursor-pointer" type="button" value="Search">
+            </div>
+
+        </section>
+        <section id="dictionary-body" class="p-10">
+
+        </section>
+        <div id="loading-spinner"></div>
+    </main>
+
+    <!-- javascript -->
+    <script src="script.js"></script>
+</body>
+
+</html>
