@@ -11,9 +11,9 @@ const loadWord = async (searchWord) => {
   }
 }
 // dynamic search field
-document.getElementById("search-btn").addEventListener('click', () => {
+const inputField = document.getElementById("input-field");
+const searchMethod = () => {
   const wordBody = document.getElementById("dictionary-body");
-  const inputField = document.getElementById("input-field");
       // input condition validations
   if (!inputField.value) {
     return;
@@ -22,6 +22,16 @@ document.getElementById("search-btn").addEventListener('click', () => {
   inputField.value = '';
   wordBody.innerHTML = '';
   loadingSpinner(true);   // loading data spinner
+}
+    // search button
+document.getElementById("search-btn").addEventListener('click', () => {
+    searchMethod();
+})
+    // enter button
+inputField.addEventListener("keyup", (event) => {
+  if (event.key === "Enter") {
+    searchMethod();
+  }
 })
 // display loading information
 const displayWord = word => {
