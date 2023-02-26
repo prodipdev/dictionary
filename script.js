@@ -10,41 +10,20 @@ const loadWord = async (searchWord) => {
     console.log(error)
   }
 }
-// dynamic search field
-const inputField = document.getElementById("input-field");
-const searchMethod = () => {
-  const wordBody = document.getElementById("dictionary-body");
-      // input condition validations
-  if (!inputField.value) {
-    return;
-  }
-  loadWord(inputField.value);
-  inputField.value = '';
-  wordBody.innerHTML = '';
-  loadingSpinner(true);   // loading data spinner
-}
-    // search button
-document.getElementById("search-btn").addEventListener('click', () => {
-    searchMethod();
-})
-    // enter button
-inputField.addEventListener("keyup", (event) => {
-  if (event.key === "Enter") {
-    searchMethod();
-  }
-})
+
 // display loading information
 const displayWord = word => {
   const wordBody = document.getElementById("dictionary-body");
-      // not found error handles
+  // not found error handles
   if (!word) {
     wordBody.innerHTML = `
     <h1 class="text-center"><i class="fa-solid fa-triangle-exclamation mr-2 text-yellow-500"></i>Sorry, no results found.</h1>
     `
+    // stop loading spinner
     loadingSpinner(false);
     return;
   }
-      // set information in HTML field
+  // set information in HTML field
   wordBody.innerHTML = `
       <div class="flex justify-between">
         <div>
@@ -81,22 +60,47 @@ const displayWord = word => {
       <p class="mt-5 text-gray-600 font-semibold">Synonyms: <span class="text-indigo-600">${word.meanings[2]?.synonyms || ''}</span></p>
       <p class="mt-5 text-gray-600 font-semibold">Antonyms: <span class="text-indigo-600">${word.meanings[2]?.antonyms || ''}</span></p>
       <p class="mt-8 text-sm"><span class=" font-semibold">Source: </span> <a class="text-indigo-600 underline" href="${word.sourceUrls}">${word.sourceUrls}</a></p>
-    `;
+      `;
+  loadingSpinner(false); // stop loading spinner
   const definitionList = document.getElementById('definition-list');
   const definitionItem = word.meanings[2].definitions;
   definitionItem.forEach(item => {
     const list = document.createElement('li')
     list.innerHTML = `
-        <li>
-        <p>${item.definition}</P>
-        ${item.example ? `<p class="text-gray-600">"${item.example}"</p>` : ''}
-        </li>
-        `
+      <li>
+      <p>${item.definition}</P>
+      ${item.example ? `<p class="text-gray-600">"${item.example}"</p>` : ''}
+      </li>
+      `
     definitionList.appendChild(list)
   })
-
-    loadingSpinner(false);  // loading data spinner
 };
+
+// dynamic search field
+const inputField = document.getElementById("input-field");
+const searchMethod = () => {
+  const wordBody = document.getElementById("dictionary-body");
+  // input condition validations
+  if (!inputField.value) {
+    return;
+  }
+  loadWord(inputField.value);
+  inputField.value = '';
+  wordBody.innerHTML = '';
+  // start loading spinner when starting search
+  loadingSpinner(true);
+}
+// search button
+document.getElementById("search-btn").addEventListener('click', () => {
+  searchMethod();
+})
+// enter button
+inputField.addEventListener("keyup", (event) => {
+  if (event.key === "Enter") {
+    searchMethod();
+  }
+})
+
 // loading spinner method
 const loadingSpinner = (condition) => {
   const mainBody = document.getElementById("loading-spinner");
@@ -109,7 +113,7 @@ const loadingSpinner = (condition) => {
     </div>
     `
   } else {
-      mainBody.innerHTML = '';
+    mainBody.innerHTML = '';
   }
 }
 
