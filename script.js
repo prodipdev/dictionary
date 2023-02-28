@@ -25,15 +25,15 @@ const displayWord = word => {
   }
   // set information in HTML field
   wordBody.innerHTML = `
-      <div class="flex justify-between">
+      <div class="flex gap-5 justify-between">
         <div>
           <h1 class="text-4xl font-semibold">${word.word}</h1>
           <p class="text-purple-500">${word.phonetics[1]?.text || ''}</p>
         </div>
         <div>
-          <audio controls>
-            <source src="${word.phonetics[1]?.audio || ''}" type="audio/mpeg">
-          </audio>
+          <audio id="myAudio" src="${word.phonetics[1]?.audio || ''}" type="audio/mpeg"></audio>
+
+          <i onclick="playAudio()" class="fa-regular fa-circle-play text-3xl text-rose-500 hover:text-rose-600 active:text-rose-700"></i>
         </div>
       </div>
       <p id="word-type" class="mt-8 text-xl text-gray-500 font-semibold">noun</p>
@@ -75,6 +75,19 @@ const displayWord = word => {
     definitionList.appendChild(list)
   })
 };
+
+// pronunciation playing button
+let playing = false;
+const playAudio = () => {
+  const audio = document.getElementById("myAudio");
+  if (playing) {
+    audio.pause();
+    playing = false;
+  } else {
+    audio.play();
+    playing = true;
+  }
+}
 
 // dynamic search field
 const inputField = document.getElementById("input-field");
